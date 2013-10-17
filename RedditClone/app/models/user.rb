@@ -7,6 +7,31 @@ class User < ActiveRecord::Base
 		self.reset_session_token! unless self.session_token
 	end
 
+	has_many(
+	:moderated_subs,
+	:class_name => "Sub",
+	:foreign_key => :user_id,
+	:primary_key => :id,
+	:inverse_of => :moderator
+	)
+
+	has_many(
+	:links,
+	:class_name => "Link",
+	:foreign_key => :user_id,
+	:primary_key => :id,
+	:inverse_of => :author
+	)
+
+	has_many(
+	:comments,
+	:class_name => "Comment",
+	:foreign_key => :user_id,
+	:primary_key => :id,
+	:inverse_of => :author
+	)
+
+
 	def password=(password)
 		self.password_digest = BCrypt::Password.create(password)
 		self.save!
