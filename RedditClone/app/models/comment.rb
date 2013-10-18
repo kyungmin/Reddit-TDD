@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :user_id, :link_id, :parent_comment_id, :body
+  attr_accessible :user_id, :link_id, :body, :parent_comment_id
 	# validates :user_id, :link_id, :body, presence: true
 	validates :body, presence: true
 	# validates :author, :link
@@ -16,17 +16,18 @@ class Comment < ActiveRecord::Base
 	:parent_comment,
 	:class_name => "Comment",
 	:foreign_key => :parent_comment_id,
-	:primary_key => :id,
-	:inverse_of => :child_comments
+	:primary_key => :id
+	# :inverse_of => :child_comments
 	)
 
 	has_many(
 	:child_comments,
 	:class_name => "Comment",
 	:foreign_key => :parent_comment_id,
-	:primary_key => :id,
-	:inverse_of => :parent_comment
+	:primary_key => :id
+	# :inverse_of => :parent_comment
 	)
+
 
 	belongs_to(
 	:author,

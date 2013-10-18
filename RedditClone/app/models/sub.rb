@@ -2,6 +2,11 @@ class Sub < ActiveRecord::Base
   attr_accessible :name, :user_id
 	validates :name, :user_id, presence: true
 	# validates :name, presence: true
+	validate(on: :create) do
+		if self.links.length > 5
+			errors[:base] << "Too many links"
+		end
+	end
 
 	belongs_to(
 	:moderator,
